@@ -1,0 +1,22 @@
+/*insertion dans la table catégories */
+INSERT INTO `categories` (`id_categorie`, `nom_categorie`) VALUES (NULL, 'biscuits');
+
+/*insertion dans la table aliments*/
+INSERT INTO `aliments` (`id_aliment`, `nom_aliment`, `categorie_id`, `printemps`, `ete`, `automne`, `hiver`, `stock_aliment`) VALUES (NULL, 'Madeleines pur beurre', '10', '1', '1', '1', '1', '6');
+
+/*insertion dans la table prix*/
+INSERT INTO `prix` (`id_prix`, `aliment_id`, `date_prix`, `montant_prix`) VALUES (NULL, '4', '2020-10-22', '3.75');
+
+/*rechercher toutes les entrées aliments étant des matières grasses*/
+SELECT * FROM `aliments` 
+WHERE categorie_id IN (SELECT id_categorie FROM categories WHERE nom_categorie='matières grasses');
+
+/*rechercher le nom de tous les aliments coûtant moins de 5 euros*/
+SELECT nom_aliment FROM aliments
+WHERE id_aliment IN (SELECT aliment_id FROM prix WHERE montant_prix<5);
+
+/*rechercher le nom de tous les aliments de type fruits étant de saison au printemps et étant en stock*/
+SELECT nom_aliment FROM `aliments` 
+WHERE printemps=true
+AND categorie_id IN (SELECT id_categorie FROM categories WHERE nom_categorie='fruits')
+AND stock_aliment>0;
